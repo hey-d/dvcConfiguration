@@ -1,0 +1,39 @@
+stages:
+  data-ingestion:
+    cmd: python components/dataIngestion.py
+    deps: 
+    - components/dataIngestion.py
+    outs: 
+    - data/raw
+  
+  data-preprocessing:
+    cmd: python components/dataPreprocessing.py
+    deps:
+    - data/raw
+    - components/dataPreprocessing.py
+    outs: 
+    - data/interim
+  
+  feature-engineering:
+    cmd: python components/featureEngineering.py
+    deps:
+    - data/interim
+    - components/featureEngineering.py
+    outs: 
+    - data/processed
+  
+  model-training:
+    cmd: python components/modelTraining.py
+    deps:
+    - data/processed
+    - components/modelTraining.py
+    outs: 
+    - models/random_forest_model.pkl
+  
+  model-evaluation:
+    cmd: python  components/modelEvaluation.py
+    deps:
+    - models/
+    - components/modelEvaluation.py
+    outs: 
+    - reports/metrics.json

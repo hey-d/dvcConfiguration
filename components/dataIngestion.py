@@ -42,7 +42,7 @@ def main():
             test_size = 0.2
             random_state=42
             train_data, test_data = train_test_split(processed_df, test_size = test_size, random_state = random_state)
-            path = './data'
+            path = './data/raw'
             save_data(train_data, test_data, path)
             
 if __name__ == "__main__": main()

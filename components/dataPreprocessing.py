@@ -40,8 +40,8 @@ def preprocess_data(df: pd.DataFrame, text_data = 'v2', target_data = 'v1')->pd.
         return None
 def main():
     
-    train_data = pd.read_csv('./data/train_data.csv')
-    test_data = pd.read_csv('./data/test_data.csv')
+    train_data = pd.read_csv('./data/raw/train_data.csv')
+    test_data = pd.read_csv('./data/raw/test_data.csv')
     print("data loaded successfully")
     
     preProcessed_train = preprocess_data(train_data)
