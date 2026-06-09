@@ -62,7 +62,7 @@ def main():
     test_data = load_data(test_path)
     
     if train_data is not None and test_data is not None:
-        params = load_params('params.yaml')
+        params = load_params(params_path='params.yaml')
         limit = params['feature-engineering']['limit']
         train_df, test_df = vectorize_text(train_data, test_data, limit)
         if train_df is not None and test_df is not None:

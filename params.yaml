@@ -3,8 +3,8 @@ data-ingestion:
   random_state: 42
 
 feature-engineering:
-  limit: 3000
+  limit: 8000
 
 model-training:
-  n-estimators: 4
+  n_estimators: 22
   random_state: 42

@@ -51,7 +51,7 @@ def main():
     if df is not None:
         processed_df = process_data(df)
         if processed_df is not None:
-            params = load_params('params.yaml')
+            params = load_params(params_path='params.yaml')
             if params is not None:
                 test_size=params['data-ingestion']['test_size']
                 random_state=params['data-ingestion']['random_state']

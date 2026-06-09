@@ -50,15 +50,14 @@ def save_model(model: RandomForestClassifier, file_path: str):
         print(f"error saving the model, {e}")
 
 def main():
-    params = load_params('params.yaml')
-    parameters={'n_estimators': params['model-training']['n-estimators'], 'random_state': params['model-training']['random_state']}
+    params = load_params(params_path='params.yaml')['model-training']
     train_path = './data/processed/processed_train.csv'
     train_data = load_data(train_path)
     print("Data loaded")
     if train_data is not None:
        X_train = train_data.drop('label', axis=1).values
        y_train = train_data['label'].values
-       model = train_model(X_train, y_train, parameters)
+       model = train_model(X_train, y_train, params)
        print("model trained successfully")
        if model is not None:
            model_path ='./models/random_forest_model.pkl'

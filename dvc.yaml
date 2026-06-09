@@ -5,6 +5,9 @@ stages:
     - components/dataIngestion.py
     outs: 
     - data/raw
+    params:
+    - data-ingestion.test_size
+    - data-ingestion.random_state
   
   data-preprocessing:
     cmd: python components/dataPreprocessing.py
@@ -21,6 +24,8 @@ stages:
     - components/featureEngineering.py
     outs: 
     - data/processed
+    params:
+    - feature-engineering.limit
   
   model-training:
     cmd: python components/modelTraining.py
@@ -29,6 +34,9 @@ stages:
     - components/modelTraining.py
     outs: 
     - models/random_forest_model.pkl
+    params:
+    - model-training.n_estimators
+    - model-training.random_state
   
   model-evaluation:
     cmd: python  components/modelEvaluation.py
