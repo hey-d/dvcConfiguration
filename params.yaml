@@ -6,5 +6,5 @@ feature-engineering:
   limit: 8000
 
 model-training:
-  n_estimators: 22
+  n_estimators: 16
   random_state: 42
