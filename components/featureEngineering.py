@@ -1,6 +1,19 @@
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import os
+import yaml
+
+
+
+def load_params(params_path: str)->dict:
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+            print("params loaded successfully")
+            return params
+    except Exception as e:
+        print(f"error occured while loading params, {e}")
+        return None
 
 def load_data(file_path: str)->pd.DataFrame:
     try:
@@ -49,7 +62,8 @@ def main():
     test_data = load_data(test_path)
     
     if train_data is not None and test_data is not None:
-        limit = 5000
+        params = load_params('params.yaml')
+        limit = params['feature-engineering']['limit']
         train_df, test_df = vectorize_text(train_data, test_data, limit)
         if train_df is not None and test_df is not None:
             newPath =  os.path.join('./data', 'processed')

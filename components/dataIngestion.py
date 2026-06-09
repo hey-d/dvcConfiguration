@@ -1,6 +1,18 @@
 import pandas as pd
 import os 
 from sklearn.model_selection import train_test_split
+import yaml
+
+
+def load_params(params_path: str)->dict:
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+            print("params loaded successfully")
+            return params
+    except Exception as e:
+        print(f"error occured while loading params, {e}")
+        return None
 
 def load_data(file_path: str)->pd.DataFrame:
     try: 
@@ -39,11 +51,13 @@ def main():
     if df is not None:
         processed_df = process_data(df)
         if processed_df is not None:
-            test_size = 0.2
-            random_state=42
-            train_data, test_data = train_test_split(processed_df, test_size = test_size, random_state = random_state)
-            path = './data/raw'
-            save_data(train_data, test_data, path)
+            params = load_params(params_path='params.yaml')
+            if params is not None:
+                test_size=params['data-ingestion']['test_size']
+                random_state=params['data-ingestion']['random_state']
+                train_data, test_data = train_test_split(processed_df, test_size = test_size, random_state = random_state)
+                path = './data/raw'
+                save_data(train_data, test_data, path)
             
 if __name__ == "__main__": main()
 

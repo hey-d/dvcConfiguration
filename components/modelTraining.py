@@ -3,7 +3,18 @@ import os;
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 import pickle
+import yaml
 
+
+def load_params(params_path: str)->dict:
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+            print("params loaded successfully")
+            return params
+    except Exception as e:
+        print(f"error occured while loading params, {e}")
+        return None
 
 def load_data(file_path: str)->pd.DataFrame:
     try:
@@ -39,14 +50,15 @@ def save_model(model: RandomForestClassifier, file_path: str):
         print(f"error saving the model, {e}")
 
 def main():
-    params={'n_estimators': 3, 'random_state': 42}
+    params = load_params('params.yaml')
+    parameters={'n_estimators': params['model-training']['n-estimators'], 'random_state': params['model-training']['random_state']}
     train_path = './data/processed/processed_train.csv'
     train_data = load_data(train_path)
     print("Data loaded")
     if train_data is not None:
        X_train = train_data.drop('label', axis=1).values
        y_train = train_data['label'].values
-       model = train_model(X_train, y_train, params)
+       model = train_model(X_train, y_train, parameters)
        print("model trained successfully")
        if model is not None:
            model_path ='./models/random_forest_model.pkl'
