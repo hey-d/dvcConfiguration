@@ -1,47 +1,54 @@
 stages:
   data-ingestion:
     cmd: python components/dataIngestion.py
-    deps: 
+    deps:
     - components/dataIngestion.py
-    outs: 
+    outs:
     - data/raw
     params:
     - data-ingestion.test_size
     - data-ingestion.random_state
-  
+
   data-preprocessing:
     cmd: python components/dataPreprocessing.py
     deps:
     - data/raw
     - components/dataPreprocessing.py
-    outs: 
+    outs:
     - data/interim
-  
+
   feature-engineering:
     cmd: python components/featureEngineering.py
     deps:
     - data/interim
     - components/featureEngineering.py
-    outs: 
+    outs:
     - data/processed
     params:
     - feature-engineering.limit
-  
+
   model-training:
     cmd: python components/modelTraining.py
     deps:
     - data/processed
     - components/modelTraining.py
-    outs: 
+    outs:
     - models/random_forest_model.pkl
     params:
     - model-training.n_estimators
     - model-training.random_state
-  
+
   model-evaluation:
     cmd: python  components/modelEvaluation.py
     deps:
     - models/
     - components/modelEvaluation.py
-    outs: 
+    outs:
     - reports/metrics.json
+metrics:
+- dvclive/metrics.json
+plots:
+- dvclive/plots/metrics:
+    x: step
+params:
+- dvclive/params.yaml

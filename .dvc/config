@@ -1,0 +1,5 @@
+[core]
+    remote = oracle
+['remote "oracle"']
+    url = s3://first-bucket
+    endpointurl = https://bmrll9drecpe.compat.objectstorage.ap-mumbai-1.oraclecloud.com
